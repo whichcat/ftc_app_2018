@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -72,7 +73,11 @@ public class Team7593Hardware {
 
         //Define and initialize motors
         //motorFrontRight = hwMap.dcMotor.get("mfr");
-        motorFrontRight = hwMap.get(DcMotor.class, "mfr");
+        try{
+            motorFrontRight = hwMap.get(DcMotor.class, "mfr");
+        }catch (NullPointerException e){
+            System.out.println("SOMETHANG HAPPENED");
+        }
         motorFrontLeft = hwMap.get(DcMotor.class, "mfl");
         motorRearRight = hwMap.get(DcMotor.class, "mrr");
         motorRearLeft = hwMap.get(DcMotor.class, "mrl");
