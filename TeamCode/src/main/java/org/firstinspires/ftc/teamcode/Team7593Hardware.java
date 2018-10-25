@@ -45,8 +45,8 @@ public class Team7593Hardware {
 
 
     //declare internal imu and the parameters
-    //public BNO055IMU imu;
-    //BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+    public BNO055IMU imu;
+    BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
     //get the initial angle from the imu
     float initAngle;
@@ -57,11 +57,11 @@ public class Team7593Hardware {
 
     //Constructor (mostly for IMU (all classes need a constructor though))
     public Team7593Hardware(){
-        //parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        //parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        //parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        //parameters.loggingEnabled      = true;
-        //parameters.loggingTag          = "IMU";
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters.loggingEnabled      = true;
+        parameters.loggingTag          = "IMU";
     }
 
 
@@ -89,10 +89,9 @@ public class Team7593Hardware {
         //Define and initialize sensors
 
 
-        //imu = hwMap.get(BNO055IMU.class, "imu 1");
-        //imu.initialize(parameters);
+        imu = hwMap.get(BNO055IMU.class, "imu 1");
+        imu.initialize(parameters);
 
-        //range = hwMap.get(ModernRoboticsI2cRangeSensor.class, "range_left");
 
 
         //set motor encoders
@@ -119,25 +118,25 @@ public class Team7593Hardware {
         motorRearRight.setPower(0);
     }
 
-    //    public float getCurrentAngle(){
-//        Orientation angles;
-//
-//        float currentAngle;
-//        angles   = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//
-//        currentAngle = angles.firstAngle - initAngle;
-//
-//        // Keep current angle between 0 and 360
-//        while(currentAngle < 0) {
-//            currentAngle = currentAngle+360;
-//        }
-//
-//        while(currentAngle > 360) {
-//            currentAngle = currentAngle - 360;
-//        }
-//
-//        return currentAngle;
-//    }
+        public float getCurrentAngle(){
+        Orientation angles;
+
+        float currentAngle;
+        angles   = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        currentAngle = angles.firstAngle - initAngle;
+
+        // Keep current angle between 0 and 360
+        while(currentAngle < 0) {
+            currentAngle = currentAngle+360;
+        }
+
+        while(currentAngle > 360) {
+            currentAngle = currentAngle - 360;
+        }
+
+        return currentAngle;
+    }
 
     /***
      * waitForTick implements a periodic delay. However, this acts like a metronome with a regular
@@ -163,7 +162,7 @@ public class Team7593Hardware {
         period.reset();
     }
 
-//    public void resetInitAngle() {
-//        this.initAngle = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-//    }
+    public void resetInitAngle() {
+        this.initAngle = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+    }
 }
